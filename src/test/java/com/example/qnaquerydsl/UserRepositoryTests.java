@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 public class UserRepositoryTests {
     @Autowired
@@ -21,5 +23,12 @@ public class UserRepositoryTests {
         SiteUser siteUser2 = new SiteUser(null, "user2", "{noop}1234", "user2@test.com");
 
         userRepository.saveAll(Arrays.asList(siteUser1, siteUser2));
+    }
+    @Test
+    @DisplayName("1번 회원 찾기")
+    void test2() {
+        SiteUser siteUser = userRepository.getQslUser(1L);
+
+        assertThat(siteUser.getUsername()).isEqualTo("user1");
     }
 }
