@@ -25,7 +25,7 @@ public class UserRepositoryTests {
                 .password("{noop}1234")
                 .email("user1@test.com")
                 .build();
-        SiteUser siteUser2 = SiteUser.builder()
+        SiteUser siteUser2 = SiteUser.builder() //builder도입
                 .username("user2")
                 .password("{noop}1234")
                 .email("user2@test.com")
