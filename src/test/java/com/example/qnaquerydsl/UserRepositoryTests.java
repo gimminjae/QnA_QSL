@@ -19,8 +19,20 @@ public class UserRepositoryTests {
     @Test
     @DisplayName("회원생성")
     void test1() {
-        SiteUser siteUser1 = new SiteUser(null, "user1", "{noop}1234", "user1@test.com");
-        SiteUser siteUser2 = new SiteUser(null, "user2", "{noop}1234", "user2@test.com");
+
+        SiteUser siteUser1 = SiteUser.builder()
+                .username("user1")
+                .password("{noop}1234")
+                .email("user1@test.com")
+                .build();
+        SiteUser siteUser2 = SiteUser.builder()
+                .username("user2")
+                .password("{noop}1234")
+                .email("user2@test.com")
+                .build();
+        //위와 같은 코드
+//        SiteUser siteUser1 = new SiteUser(null, "user1", "{noop}1234", "user1@test.com");
+//        SiteUser siteUser2 = new SiteUser(null, "user2", "{noop}1234", "user2@test.com");
 
         userRepository.saveAll(Arrays.asList(siteUser1, siteUser2));
     }
