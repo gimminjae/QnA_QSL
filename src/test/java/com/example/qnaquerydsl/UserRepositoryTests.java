@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,5 +61,30 @@ public class UserRepositoryTests {
         int count = userRepository.getQslCount();
 
         assertThat(count).isGreaterThan(0);
+    }
+    @Test
+    @DisplayName("가장 오래된 회원 1명")
+    void test5() {
+        SiteUser siteUser = userRepository.getQslUserOrderByIdAscOne();
+
+        assertThat(siteUser.getUsername()).isEqualTo("user1");
+    }
+    @Test
+    @DisplayName("전체회원, 오래된 순")
+    void test6() {
+        List<SiteUser> siteUserList = userRepository.getQslUsersOrderById();
+
+        SiteUser siteUser1 = siteUserList.get(0);
+        assertThat(siteUser1.getUsername()).isEqualTo("user1");
+
+        SiteUser siteUser2 = siteUserList.get(1);
+        assertThat(siteUser2.getUsername()).isEqualTo("user2");
+    }
+    @Test
+    @DisplayName("회원이름, 이메일로 조회")
+    void test7() {
+        List<SiteUser> siteUserList = userRepository.searchQsl("user");
+
+        assertThat(siteUserList.size()).isEqualTo(2);
     }
 }

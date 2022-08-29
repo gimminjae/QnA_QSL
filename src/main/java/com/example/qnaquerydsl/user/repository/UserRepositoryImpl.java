@@ -5,6 +5,8 @@ import com.example.qnaquerydsl.user.entity.SiteUser;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import static com.example.qnaquerydsl.user.entity.QSiteUser.*;
 
 @RequiredArgsConstructor
@@ -33,7 +35,35 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .select(siteUser.count())
                 .from(siteUser)
                 .fetchOne();
-        return (int)count;
+        return (int) count;
+    }
+
+    @Override
+    public SiteUser getQslUserOrderByIdAscOne() {
+            return jpaQueryFactory
+                    .select(siteUser)
+                    .from(siteUser)
+                    .orderBy(siteUser.id.asc())
+                    .limit(1)
+                    .fetchOne();
+    }
+
+    @Override
+    public List<SiteUser> getQslUsersOrderById() {
+        return jpaQueryFactory
+                .select(siteUser)
+                .from(siteUser)
+                .orderBy(siteUser.id.asc())
+                .fetch();
+    }
+
+    @Override
+    public List<SiteUser> searchQsl(String username) {
+        return jpaQueryFactory
+                .select(siteUser)
+                .from(siteUser)
+                .where(siteUser.username.like("%" + username + "%").or(siteUser.email.like("%" + username + "%")))
+                .fetch();
     }
 
 }
