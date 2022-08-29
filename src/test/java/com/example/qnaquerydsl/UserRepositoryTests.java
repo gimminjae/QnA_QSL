@@ -47,4 +47,18 @@ public class UserRepositoryTests {
 
         assertThat(siteUser.getUsername()).isEqualTo("user1");
     }
+    @Test
+    @DisplayName("2번 회원 찾기")
+    void test3() {
+        SiteUser siteUser = userRepository.getQslUser(2L);
+
+        assertThat(siteUser.getUsername()).isEqualTo("user2");
+    }
+    @Test
+    @DisplayName("모든 회원의 수")
+    void test4() {
+        int count = userRepository.getQslCount();
+
+        assertThat(count).isGreaterThan(0);
+    }
 }

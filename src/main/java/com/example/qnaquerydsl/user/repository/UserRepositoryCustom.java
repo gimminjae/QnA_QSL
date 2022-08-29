@@ -4,4 +4,5 @@ import com.example.qnaquerydsl.user.entity.SiteUser;
 
 public interface UserRepositoryCustom {
     SiteUser getQslUser(Long id);
+    int getQslCount();
 }
