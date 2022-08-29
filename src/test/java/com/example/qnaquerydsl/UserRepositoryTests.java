@@ -20,21 +20,21 @@ public class UserRepositoryTests {
     @DisplayName("회원생성")
     void test1() {
 
-        SiteUser siteUser1 = SiteUser.builder()
-                .username("user1")
+        SiteUser siteUser3 = SiteUser.builder()
+                .username("user3")
                 .password("{noop}1234")
-                .email("user1@test.com")
+                .email("user3@test.com")
                 .build();
-        SiteUser siteUser2 = SiteUser.builder() //builder도입
-                .username("user2")
+        SiteUser siteUser4 = SiteUser.builder() //builder도입
+                .username("user4")
                 .password("{noop}1234")
-                .email("user2@test.com")
+                .email("user4@test.com")
                 .build();
         //위와 같은 코드
 //        SiteUser siteUser1 = new SiteUser(null, "user1", "{noop}1234", "user1@test.com");
 //        SiteUser siteUser2 = new SiteUser(null, "user2", "{noop}1234", "user2@test.com");
 
-        userRepository.saveAll(Arrays.asList(siteUser1, siteUser2));
+        userRepository.saveAll(Arrays.asList(siteUser3, siteUser4));
     }
     @Test
     @DisplayName("1번 회원 찾기")
