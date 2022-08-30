@@ -1,8 +1,11 @@
 package com.example.qnaquerydsl.user.entity;
 
+import com.example.qnaquerydsl.interestKeyword.entity.InterestKeyword;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -23,7 +26,11 @@ public class SiteUser {
     @Column(unique = true)
     private String email;
 
-    public void addInterestKeywordContent(String keywordContent) {
+    @ManyToMany(cascade = CascadeType.ALL)
+    @Builder.Default
+    private Set<InterestKeyword> interestKeywords = new HashSet<>();
 
+    public void addInterestKeywordContent(String keywordContent) {
+        interestKeywords.add(new InterestKeyword(keywordContent));
     }
 }
