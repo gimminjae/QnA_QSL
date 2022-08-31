@@ -1,5 +1,6 @@
 package com.example.qnaquerydsl.user.repository;
 
+import com.example.qnaquerydsl.interestKeyword.entity.InterestKeyword;
 import com.example.qnaquerydsl.user.entity.QSiteUser;
 import com.example.qnaquerydsl.user.entity.SiteUser;
 import com.querydsl.core.types.Order;
@@ -16,6 +17,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 import java.util.List;
 import java.util.function.LongSupplier;
 
+import static com.example.qnaquerydsl.interestKeyword.entity.QInterestKeyword.interestKeyword;
 import static com.example.qnaquerydsl.user.entity.QSiteUser.*;
 
 @RequiredArgsConstructor
@@ -105,4 +107,31 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         return PageableExecutionUtils.getPage(users, pageable, usersCountQuery::fetchOne);
     }
 
+    @Override
+    public List<SiteUser> getQslUserByInterestKeyword(String interest) {
+        //내 코드
+//        return jpaQueryFactory
+//                .select(siteUser)
+//                .from(siteUser)
+//                .where(siteUser.interestKeywords.contains(new InterestKeyword(interest)))
+//                .fetch();
+
+         /*
+       SELECT SU.*
+       FROM site_user AS SU
+       INNER JOIN site_user_interest_keywords AS SUIK
+       ON SU.id = SUIK.site_user_id
+       INNER JOIN interest_keyword AS IK
+       ON IK.content = SUIK.interest_keywords_content
+       WHERE IK.content = "축구";
+       */
+        //정석
+        return jpaQueryFactory
+                .selectFrom(siteUser)
+                .innerJoin(siteUser.interestKeywords, interestKeyword)
+                .where(
+                        interestKeyword.content.eq(interest)
+                )
+                .fetch();
+    }
 }
