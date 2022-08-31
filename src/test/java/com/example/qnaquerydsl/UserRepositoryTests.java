@@ -193,7 +193,7 @@ public class UserRepositoryTests {
     }
 
     @Test
-    @DisplayName("축구에 관심이 있는 회원을 검색할 수 있다.")
+    @DisplayName("querydsl : 축구에 관심이 있는 회원을 검색할 수 있다.")
     void t11() {
         List<SiteUser> siteUserList = userRepository.getQslUserByInterestKeyword("축구");
 
@@ -207,5 +207,22 @@ public class UserRepositoryTests {
 
         // 테스트 케이스 추가
         // 구현, QueryDSL 사용
+    }
+
+    @Test
+    @DisplayName("jpa : 축구에 관심이 있는 회원을 검색할 수 있다.")
+    void t12() {
+        List<SiteUser> siteUserList = userRepository.findByInterestKeywords_content("축구");
+
+        SiteUser u = siteUserList.get(0);
+
+        assertThat(siteUserList.size()).isEqualTo(1);
+        assertThat(u.getId()).isEqualTo(1L);
+        assertThat(u.getUsername()).isEqualTo("user1");
+        assertThat(u.getEmail()).isEqualTo("user1@test.com");
+        assertThat(u.getPassword()).isEqualTo("{noop}1234");
+
+        // 테스트 케이스 추가
+        // 구현, jpa 사용
     }
 }

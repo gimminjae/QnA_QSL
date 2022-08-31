@@ -1,5 +1,6 @@
 package com.example.qnaquerydsl.base;
 
+import com.example.qnaquerydsl.interestKeyword.entity.InterestKeyword;
 import com.example.qnaquerydsl.user.entity.SiteUser;
 import com.example.qnaquerydsl.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +28,8 @@ public class TestInitDate {
                     .password("{noop}1234")
                     .email("user2@test.com")
                     .build();
+
+            userRepository.saveAll(Arrays.asList(siteUser1, siteUser2));
 
             siteUser1.addInterestKeywordContent("축구");
             siteUser1.addInterestKeywordContent("농구");
