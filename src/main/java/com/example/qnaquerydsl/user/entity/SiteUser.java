@@ -30,7 +30,14 @@ public class SiteUser {
     @Builder.Default
     private Set<InterestKeyword> interestKeywords = new HashSet<>();
 
+    @Builder.Default
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<SiteUser> followers = new HashSet<>();
+
     public void addInterestKeywordContent(String keywordContent) {
         interestKeywords.add(new InterestKeyword(keywordContent));
+    }
+    public void follow(SiteUser u2) {
+        u2.getFollowers().add(this);
     }
 }
