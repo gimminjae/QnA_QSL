@@ -231,7 +231,18 @@ public class UserRepositoryTests {
         SiteUser u1 = userRepository.getQslUser(1L);
         SiteUser u2 = userRepository.getQslUser(2L);
 
+        u2.follow(u1);
         u1.follow(u2);
         userRepository.save(u2);
+        userRepository.save(u1);
+    }
+    @Test
+    @DisplayName("본인은 본인을 팔로우 할 수 없다.")
+    void test14() {
+        SiteUser siteUser = userRepository.getQslUser(1L);
+
+        siteUser.follow(siteUser);
+
+        assertThat(siteUser.getFollowers().size()).isEqualTo(0);
     }
 }
