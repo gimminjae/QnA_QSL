@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -244,5 +245,22 @@ public class UserRepositoryTests {
         siteUser.follow(siteUser);
 
         assertThat(siteUser.getFollowers().size()).isEqualTo(0);
+    }
+    @Test
+    @DisplayName("팔로잉과 팔로워를 찾을 수 있다.")
+    @Rollback(false)
+    void t15() {
+        SiteUser u1 = userRepository.getQslUser(1L);
+        SiteUser u2 = userRepository.getQslUser(2L);
+
+        u1.follow(u2);
+
+        // 힌트 SiteUser에 ManyToMany 필드를 하나더 만든다.
+
+        assertThat(u1.getFollowers().size()).isEqualTo(0);
+        assertThat(u1.getFollowings().size()).isEqualTo(1);
+
+        assertThat(u2.getFollowers().size()).isEqualTo(1);
+        assertThat(u2.getFollowings().size()).isEqualTo(0);
     }
 }
